@@ -79,43 +79,70 @@ class LuckyWheelGame {
   }
 
   initAudioContext() {
-    const AudioContext = window.AudioContext || window.webkitAudioContext;
-    if (AudioContext) {
-      this.audioCtx = new AudioContext();
-    }
+    const unlockAudio = () => {
+      try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!this.audioCtx && AudioContext) {
+          this.audioCtx = new AudioContext();
+        }
+        if (this.audioCtx && this.audioCtx.state === 'suspended') {
+          this.audioCtx.resume();
+        }
+      } catch (e) {}
+    };
+
+    // Tự động kích hoạt AudioContext ngay khi người dùng có bất kỳ tương tác đầu tiên nào trên màn hình
+    ['click', 'touchstart', 'touchend', 'keydown'].forEach(evt => {
+      document.addEventListener(evt, unlockAudio, { once: true, passive: true });
+    });
+  }
+
+  ensureAudioContext() {
+    try {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      if (!this.audioCtx && AudioContext) {
+        this.audioCtx = new AudioContext();
+      }
+      if (this.audioCtx && this.audioCtx.state === 'suspended') {
+        this.audioCtx.resume();
+      }
+    } catch (e) {}
   }
 
   playTickSound() {
-    if (this.isMuted || !this.audioCtx) return;
+    if (this.isMuted) return;
+    this.ensureAudioContext();
+    if (!this.audioCtx) return;
+
     try {
-      if (this.audioCtx.state === 'suspended') {
-        this.audioCtx.resume();
-      }
+      const now = this.audioCtx.currentTime;
       const osc = this.audioCtx.createOscillator();
       const gain = this.audioCtx.createGain();
       
+      // Âm thanh cơ học click rõ nét, sắc giòn
       osc.type = 'triangle';
-      osc.frequency.setValueAtTime(600, this.audioCtx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(180, this.audioCtx.currentTime + 0.04);
+      osc.frequency.setValueAtTime(800, now);
+      osc.frequency.exponentialRampToValueAtTime(220, now + 0.05);
       
-      gain.gain.setValueAtTime(0.3, this.audioCtx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.01, this.audioCtx.currentTime + 0.04);
+      gain.gain.setValueAtTime(0.65, now);
+      gain.gain.exponentialRampToValueAtTime(0.01, now + 0.05);
       
       osc.connect(gain);
       gain.connect(this.audioCtx.destination);
       
-      osc.start();
-      osc.stop(this.audioCtx.currentTime + 0.04);
+      osc.start(now);
+      osc.stop(now + 0.05);
     } catch (e) {}
   }
 
   playWinFanfare() {
-    if (this.isMuted || !this.audioCtx) return;
+    if (this.isMuted) return;
+    this.ensureAudioContext();
+    if (!this.audioCtx) return;
+
     try {
-      if (this.audioCtx.state === 'suspended') {
-        this.audioCtx.resume();
-      }
-      const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+      // Hợp âm chúc mừng vang dội (C5, E5, G5, C6)
+      const notes = [523.25, 659.25, 783.99, 1046.50];
       notes.forEach((freq, index) => {
         const osc = this.audioCtx.createOscillator();
         const gain = this.audioCtx.createGain();
@@ -125,14 +152,14 @@ class LuckyWheelGame {
         osc.frequency.setValueAtTime(freq, startTime);
 
         gain.gain.setValueAtTime(0, startTime);
-        gain.gain.linearRampToValueAtTime(0.35, startTime + 0.02);
-        gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.5);
+        gain.gain.linearRampToValueAtTime(0.6, startTime + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.55);
 
         osc.connect(gain);
         gain.connect(this.audioCtx.destination);
 
         osc.start(startTime);
-        osc.stop(startTime + 0.5);
+        osc.stop(startTime + 0.55);
       });
     } catch (e) {}
   }
@@ -229,7 +256,7 @@ class LuckyWheelGame {
       const iconSize = Math.max(11, Math.min(16, Math.round(radius / 11.5)));
 
       ctx.fillStyle = prize.textColor || "#FFFFFF";
-      ctx.font = `600 ${fontSize}px 'Manrope', sans-serif`;
+      ctx.font = `700 ${fontSize}px 'SVN-Gilroy', 'Gilroy', 'Plus Jakarta Sans', sans-serif`;
       
       const displayText = `${prize.name}`;
       const iconOffset = prize.icon ? (iconSize + 6) : 4;
@@ -273,9 +300,7 @@ class LuckyWheelGame {
     this.spinCenterBtn.disabled = true;
     this.spinLargeBtn.disabled = true;
 
-    if (this.audioCtx && this.audioCtx.state === 'suspended') {
-      this.audioCtx.resume();
-    }
+    this.ensureAudioContext();
 
     const numPrizes = this.prizes.length;
     const arcAngle = (2 * Math.PI) / numPrizes;

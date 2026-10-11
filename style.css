@@ -37,17 +37,18 @@
   --shadow-lg: 0 20px 48px rgba(35, 43, 34, 0.1);
   --shadow-gold: 0 12px 40px rgba(197, 168, 128, 0.25);
 
-  /* Fonts */
-  --font-serif: 'Cormorant Garamond', Georgia, serif;
-  --font-sans: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-accent: 'Outfit', sans-serif;
+  /* Fonts - SVN Gilroy toàn bộ */
+  --font-main: 'SVN-Gilroy', 'Gilroy', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-serif: 'SVN-Gilroy', 'Gilroy', 'Plus Jakarta Sans', sans-serif;
+  --font-sans: 'SVN-Gilroy', 'Gilroy', 'Plus Jakarta Sans', sans-serif;
+  --font-accent: 'SVN-Gilroy', 'Gilroy', 'Plus Jakarta Sans', sans-serif;
 }
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: var(--font-sans);
+  font-family: var(--font-main) !important;
   -webkit-tap-highlight-color: transparent;
 }
 

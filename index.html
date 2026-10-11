@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Vòng Quay May Mắn - Phòng Khám Da Liễu Thiên Vân</title>
+  <meta name="description" content="Trải nghiệm Vòng Quay May Mắn nhận ngay ưu đãi chăm sóc da đặc quyền, khám da y khoa 0đ và voucher từ Phòng khám Da liễu Thiên Vân.">
+  <link rel="icon" type="image/png" href="logo_thienvan.png">
+  
+  <!-- Google Fonts: Cormorant Garamond, Manrope, Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Confetti Canvas Library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+
+  <!-- Decorative Ambient Glows -->
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+
+  <!-- Header -->
+  <header>
+    <div class="brand-wrapper">
+      <img src="logo_thienvan.png" alt="Phòng Khám Da Liễu Thiên Vân" class="brand-logo">
+      <div class="brand-meta">
+        <span class="brand-sub">PHÒNG KHÁM DA LIỄU</span>
+        <span class="brand-name">THIÊN VÂN CLINIC</span>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <!-- Badge An Toàn Khoa Học -->
+      <div class="clinical-badge">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          <polyline points="9 12 11 14 15 10"></polyline>
+        </svg>
+        <span>An toàn Khoa học</span>
+      </div>
+
+      <!-- Nút Bật/Tắt Âm Thanh -->
+      <button id="soundToggleBtn" class="btn-icon" title="Bật/Tắt âm thanh">
+        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <!-- Banner Header -->
+    <div class="hero-header">
+      <div class="event-tag">
+        <span>🌿 KHOA HỌC TÁI SINH LÀN DA</span>
+      </div>
+      <h1 class="main-title">
+        VÒNG QUAY MAY MẮN<br>
+        <span class="gold-text">THÀNH KẾT TINH HOA - TỎA SỨC HÚT</span>
+      </h1>
+    </div>
+
+    <!-- Vòng Quay May Mắn -->
+    <div class="wheel-wrapper">
+      <!-- Vành tròn ngoài dát vàng Champagne & Vòng đèn LED -->
+      <div class="wheel-outer-rim">
+        <div id="ledBulbsContainer" class="led-bulbs-container"></div>
+      </div>
+
+      <!-- Mũi Tên Chỉ Thưởng ở Đỉnh -->
+      <div id="wheelPointer" class="wheel-pointer">
+        <svg viewBox="0 0 48 56" fill="none">
+          <defs>
+            <linearGradient id="pointerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#F4EFEA"/>
+              <stop offset="40%" stop-color="#C5A880"/>
+              <stop offset="100%" stop-color="#8C7355"/>
+            </linearGradient>
+            <filter id="pointerShadow" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="4" stdDeviation="3" flood-color="rgba(35,43,34,0.6)" flood-opacity="0.6"/>
+            </filter>
+          </defs>
+          <path d="M24 54 L6 14 A6 6 0 0 1 12 6 L36 6 A6 6 0 0 1 42 14 Z" fill="url(#pointerGrad)" filter="url(#pointerShadow)" stroke="#FFFFFF" stroke-width="2.5"/>
+          <circle cx="24" cy="18" r="5" fill="#FFFFFF"/>
+        </svg>
+      </div>
+
+      <!-- Canvas Bánh Xe -->
+      <canvas id="wheelCanvas"></canvas>
+
+      <!-- Nút Quay Tròn ở Tâm -->
+      <button id="spinCenterBtn" class="spin-center-btn" title="Nhấn để quay ngay">
+        <span class="spin-btn-text">QUAY</span>
+        <span class="spin-btn-sub">THIÊN VÂN</span>
+      </button>
+    </div>
+
+    <!-- Nút Quay Lớn Dưới Vòng Quay -->
+    <div class="action-controls">
+      <button id="spinLargeBtn" class="btn-spin-large">
+        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <polygon points="5 3 19 12 5 21 5 3"></polygon>
+        </svg>
+        <span>BẮT ĐẦU QUAY NGAY</span>
+      </button>
+      <p class="spin-note">Ưu đãi áp dụng giới hạn lượt trải nghiệm độc quyền tại Thiên Vân Clinic</p>
+    </div>
+
+    <!-- Marquee Social Proof (Danh sách người vừa nhận ưu đãi) -->
+    <div class="social-proof-bar">
+      <span class="proof-tag">VỪA NHẬN</span>
+      <div class="proof-marquee">
+        <span class="marquee-content">
+          🌿 <strong>0982***142</strong> vừa nhận <em>Miễn phí Khám da cùng BS</em> &nbsp;•&nbsp; 
+          🌿 <strong>0903***889</strong> vừa nhận <em>Miễn phí 01 buổi Chăm sóc da cơ bản</em> &nbsp;•&nbsp; 
+          🌿 <strong>0918***772</strong> vừa nhận <em>Mua 1 tặng 1 Dịch vụ trẻ hóa</em> &nbsp;•&nbsp; 
+          🌿 <strong>0971***334</strong> vừa nhận <em>Giảm 20% Dịch vụ công nghệ cao</em> &nbsp;•&nbsp; 
+          🌿 <strong>0935***551</strong> vừa nhận <em>Quà tặng: 03 mặt nạ dưỡng ẩm</em>
+        </span>
+      </div>
+    </div>
+  </main>
+
+  <!-- ===================================================
+       POPUP CHÚC MỪNG TRÚNG THƯỞNG & FORM NHẬP THÔNG TIN
+       =================================================== -->
+  <div id="congratsModal" class="modal-backdrop">
+    <div class="modal-card">
+      <button id="modalCloseBtn" class="modal-close-btn" title="Đóng">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <!-- Phần Form điền thông tin -->
+      <div id="formSection">
+        <div class="congrats-icon-box">
+          <span class="gift-burst-icon">🎁</span>
+        </div>
+
+        <h2 class="modal-title">CHÚC MỪNG BẠN!</h2>
+        <p class="modal-subtitle">Bạn vừa nhận được đặc quyền chăm sóc da</p>
+
+        <!-- Khung hiển thị quà tặng -->
+        <div class="prize-banner">
+          <div class="prize-banner-label">ĐẶC QUYỀN CỦA BẠN</div>
+          <div id="modalPrizeName" class="prize-banner-value">Khám Da Y Khoa 0đ</div>
+          <div class="prize-lucky-code">
+            MÃ ƯU ĐÃI: <strong id="modalLuckyCode">LUCKY-889922</strong>
+          </div>
+        </div>
+
+        <!-- Form nhập Họ tên & Số điện thoại -->
+        <form id="claimForm" class="claim-form" novalidate>
+          <div id="nameGroup" class="form-group">
+            <label class="form-label" for="fullName">
+              <span>Họ và tên</span>
+              <span class="req">*</span>
+            </label>
+            <div class="input-box">
+              <svg class="input-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              <input type="text" id="fullName" class="form-control" placeholder="Nhập họ và tên của bạn..." required autocomplete="name">
+            </div>
+            <span class="field-error">Vui lòng nhập họ và tên của bạn (tối thiểu 2 ký tự).</span>
+          </div>
+
+          <div id="phoneGroup" class="form-group">
+            <label class="form-label" for="phoneNumber">
+              <span>Số điện thoại</span>
+              <span class="req">*</span>
+            </label>
+            <div class="input-box">
+              <svg class="input-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+              </svg>
+              <input type="tel" id="phoneNumber" class="form-control" placeholder="Ví dụ: 0912 345 678" required autocomplete="tel">
+            </div>
+            <span class="field-error">Số điện thoại không hợp lệ (cần 10 chữ số, ví dụ 09..., 03..., 08...).</span>
+          </div>
+
+          <button type="submit" id="btnSubmitClaim" class="btn-submit-claim">
+            <span class="btn-text">XÁC NHẬN NHẬN ƯU ĐÃI NGAY</span>
+            <div class="spinner"></div>
+          </button>
+        </form>
+      </div>
+
+      <!-- Phần Thông Báo Nhận Quà Thành Công -->
+      <div id="claimSuccessCard" class="claim-success-card">
+        <div class="success-check-icon">
+          <svg width="36" height="36" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+        </div>
+
+        <h3 class="success-title">ĐĂNG KÝ THÀNH CÔNG!</h3>
+        <p class="success-desc">
+          Thông tin của bạn đã được ghi nhận trên hệ thống Thiên Vân Clinic. Chuyên viên sẽ liên hệ theo số điện thoại để hỗ trợ kích hoạt ưu đãi!
+        </p>
+
+        <div class="info-summary-box">
+          <div class="info-summary-row">
+            <span class="info-summary-label">Khách hàng:</span>
+            <span id="summaryName" class="info-summary-val"></span>
+          </div>
+          <div class="info-summary-row">
+            <span class="info-summary-label">Số điện thoại:</span>
+            <span id="summaryPhone" class="info-summary-val"></span>
+          </div>
+          <div class="info-summary-row">
+            <span class="info-summary-label">Ưu đãi:</span>
+            <span id="summaryPrize" class="info-summary-val" style="color: var(--accent-gold);"></span>
+          </div>
+          <div class="info-summary-row">
+            <span class="info-summary-label">Mã xác nhận:</span>
+            <span id="summaryCode" class="info-summary-val" style="color: var(--accent-green-clinical); font-family: monospace;"></span>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 12px;">
+          <button id="btnCloseFinal" class="btn-close-final" style="background: linear-gradient(135deg, #5D6E5A 0%, #3E4D3C 100%); color: #FFFFFF; border: none; padding: 14px 20px; font-weight: 700; box-shadow: 0 4px 16px rgba(62, 77, 60, 0.25);">
+            👉 Hoàn tất & Nhận ưu đãi trên Zalo
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toastMsg" class="toast-msg"></div>
+
+  <!-- Main JavaScript Logic -->
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+# Local environment variables
+.env
+.env.local
+.env.*.local
+
+# Vercel folder
+.vercel
+
+# Node modules / logs
+node_modules
+*.log

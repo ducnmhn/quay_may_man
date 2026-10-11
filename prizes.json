@@ -1,0 +1,72 @@
+[
+  {
+    "id": 1,
+    "name": "Khám da cùng BS",
+    "fullName": "Miễn phí Khám da cùng BS",
+    "percent": 30,
+    "redirectUrl": "https://zalo.me/app/link/tn64rqrlkb",
+    "color": "#3E4D3C",
+    "textColor": "#FFFFFF",
+    "icon": "🩺"
+  },
+  {
+    "id": 2,
+    "name": "Chăm sóc da cơ bản",
+    "fullName": "Miễn phí 01 buổi Chăm sóc da cơ bản",
+    "percent": 30,
+    "redirectUrl": "https://zalo.me/app/link/4jacs1cqhd",
+    "color": "#C5A880",
+    "textColor": "#232B22",
+    "icon": "💆"
+  },
+  {
+    "id": 3,
+    "name": "Mua 1 tặng 1 Trẻ hóa",
+    "fullName": "Mua 1 tặng 1 Dịch vụ trẻ hóa",
+    "percent": 15,
+    "redirectUrl": "https://zalo.me/app/link/gcehf0pj2d",
+    "color": "#5D6E5A",
+    "textColor": "#FFFFFF",
+    "icon": "✨"
+  },
+  {
+    "id": 4,
+    "name": "Giảm 20% CN cao",
+    "fullName": "Giảm giá 20% Dịch vụ công nghệ cao",
+    "percent": 10,
+    "redirectUrl": "https://zalo.me/app/link/ab04b0w652",
+    "color": "#8C7355",
+    "textColor": "#FFFFFF",
+    "icon": "💎"
+  },
+  {
+    "id": 5,
+    "name": "Giảm 15% Phác đồ",
+    "fullName": "Giảm 15% Dịch vụ điều trị da theo phác đồ",
+    "percent": 5,
+    "redirectUrl": "https://zalo.me/app/link/hmk68oyzzt",
+    "color": "#4A5D47",
+    "textColor": "#FFFFFF",
+    "icon": "📋"
+  },
+  {
+    "id": 6,
+    "name": "Giảm 10% Chuyên sâu",
+    "fullName": "Giảm 10% Chăm sóc da chuyên sâu",
+    "percent": 5,
+    "redirectUrl": "https://zalo.me/app/link/ox8luyhita",
+    "color": "#B89B72",
+    "textColor": "#232B22",
+    "icon": "💧"
+  },
+  {
+    "id": 7,
+    "name": "Tặng 03 Mặt nạ",
+    "fullName": "Quà tặng: 03 mặt nạ dưỡng ẩm",
+    "percent": 5,
+    "redirectUrl": "https://zalo.me/app/link/d4qrw3rlpc",
+    "color": "#2D382B",
+    "textColor": "#FFFFFF",
+    "icon": "🎁"
+  }
+]
